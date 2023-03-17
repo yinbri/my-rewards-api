@@ -118,7 +118,7 @@ REST API Exposed
 Appendix
 =============================================
 
-##Short Reference of the MongoDB commands
+## Short Reference of the MongoDB commands
 
 ```
 use mydb
@@ -129,7 +129,7 @@ db.user.deleteOne({"username":"luis@gmail.com", "password":"test"})
 db.user.insertOne([{"username":"luis@gmail.com", "password":"test"},
 {"username":"mary@gmail.com", "password":"test"}])
 ```
-##Short reference to git commands
+## Short reference to git commands
 ```
 git init
 git add -A
@@ -138,7 +138,7 @@ git branch -M main
 git remote add origin https://github.com/yinbri/my-rewards-api.git
 git push -u -f origin main
 ```
-##Push changed code to Github
+## Push changed code to Github
 ```
 git add READEME.md
 git commit -m "updated README.md"
