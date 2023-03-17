@@ -116,13 +116,14 @@ Test web service with SoapUI
 REST API Exposed
 =============================================
 
-| Service 				| Description						|
-| login_service	 			| look up user from database				|
-| enrollment_service 			| insert new user to database					|
-| eligible_activity_service 		| find all activities that a student can see) 			|
-| optin_service 			| record student opt in an activity				|
-| rewards_activity_service 		| find a student's rewards activities)
+| Service 				| Description						   |
+|---------------------------------------|----------------------------------------------------------|
+| login_service	 			| look up user from database				   |
+| enrollment_service 			| insert new user to database			  	   |
+| eligible_activity_service 		| find all activities that a student can see  	 	   |
+| optin_service 			| record student opt in an activity		 	   |
+| rewards_activity_service 		| find a student's rewards activities 			   |
 | update_enrollment_service 		| update the enrolment status of an activity for a student |
-| admin_login_service 			| look up admin user from database|
-| pending_user_activities_service 	|look up all pending activities for all students |
-| leader_board_service 			|retrieve top 3 leaders based on total points owned|
+| admin_login_service 			| look up admin user from database 			   |
+| pending_user_activities_service 	|look up all pending activities for all students 	   |
+| leader_board_service 			|retrieve top 3 leaders based on total points owned	   |
