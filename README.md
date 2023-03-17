@@ -2,30 +2,28 @@
 Download code from Github
 ===========================
 
-Download code GitHub: https://github.com/yinbri/my-rewards-api. Let the local working directory be c:\project\my-rewards-api.
+Download code from GitHub (https://github.com/yinbri/my-rewards-api.git) into a local working directory, such as c:\project\my-rewards-api
 
 
-# Install MongoDB (skip if you have installed before)
+# Install MongoDB (skip if you have it on your machine already)
 
-1. Download community edition (https://www.mongodb.com/try/download/community) and choose to installation path, e.g. c:\tools, which will direct MongoDB to be installed at c:\tools\MongoDB
+1. Download MongoDB community edition (https://www.mongodb.com/try/download/community) and choose to installation path, such as c:\tools\MongoDB
 
-2. Start MongoDB
+2. Start MongoDB 
+
 ```
   > c:\tools\MongoDB\Server\6..0\bin\bin>mongod --dbpath c:\project\my-rewards-api\data
 ```
-if this runs successfully, the mongod will not exit to windows command line prompt
 
-# Install Mongosh (skip if you have installed before)
+# Install Mongosh (skip if you have it on your machine already)
 
-1.Download (https://www.mongodb.com/try/download/shell)
+1.Download (https://www.mongodb.com/try/download/shell) and provide an installation folder to install, such as c:\tools and Mongosh will be installed to c:\tools\mongosh-1.8-win32-x64
 
-2.Run installer and install it to c:\tools. Mongosh will be installed to c:\tools\mongosh-1.8-win32-x64
+2.Start mongosh. Mongosh prompt will show up if it is started successfully.  
 
-3.Start mongosh
 ```
 c:\tools\mongosh-1.8-win32-x64\mongosh
 ```
-Mongosh prompt will show up if it is started successfully  
 
 Run command to test installation of both the shell and the MongoDB
 ```
