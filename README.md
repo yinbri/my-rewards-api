@@ -1,6 +1,6 @@
 Context
 =============================================
-This project illustrate how to keep data in MongoDB and how to develop REST APIs with Python Flask.
+This project illustrate how to keep data in MongoDB and how to develop REST APIs with Python Flask. This is my first time to develop APIs in my high school project. 
 
 Download code from Github
 =============================================
