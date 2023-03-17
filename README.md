@@ -85,7 +85,7 @@ Develop web services with Python
 Test web service with SoapUI
 =============================================
 
-1. Download and install SoapUI if you don't have one installed. My version is 5.7.0
+1. Download and install SoapUI (https://www.soapui.org/downloads/soapui/) if you don't have one installed.
 2. Create a project
 3. Create a new request with the following data entered:
 
