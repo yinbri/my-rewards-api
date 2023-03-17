@@ -1,5 +1,6 @@
 
-# Download code from Github
+Download code from Github
+===========================
 
 Download code GitHub: https://github.com/yinbri/my-rewards-api
 
