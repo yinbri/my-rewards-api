@@ -116,7 +116,7 @@ Test web service with SoapUI
 REST API Exposed
 =============================================
 
-| Service 				| Description						   |
+| API 					| Description						   |
 |---------------------------------------|----------------------------------------------------------|
 | login_service	 			| look up user from database				   |
 | enrollment_service 			| insert new user to database			  	   |
