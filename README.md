@@ -16,39 +16,39 @@ Download community edition (https://www.mongodb.com/try/download/community). Run
 ```
   > c:\tools\MongoDB\Server\6..0\bin\bin>mongod --dbpath c:\project\my-rewards-api\data
 ```
-  if this runs successfully, the mongod will not exit to windows command line prompt
+if this runs successfully, the mongod will not exit to windows command line prompt
 
 # Install Mongosh (skip if you have installed before)
 
-1. Download (https://www.mongodb.com/try/download/shell)
+1.Download (https://www.mongodb.com/try/download/shell)
 
-2. Run installer and install it to c:\tools
-   Mongosh will be installed to c:\tools\mongosh-1.8-win32-x64
+2.Run installer and install it to c:\tools. Mongosh will be installed to c:\tools\mongosh-1.8-win32-x64
 
-3. Start mongosh
-
+3.Start mongosh
+```
 c:\tools\mongosh-1.8-win32-x64\mongosh
+```
+Mongosh prompt will show up if it is started successfully  
 
-  Mongosh prompt will show up if it is started successfully  
-
-  Run command to test installation of both the shell and the MongoDB
-  >show dbs
+Run command to test installation of both the shell and the MongoDB
+```
+> show dbs
+```
 
 # Load testing data to MongoDB
 
 go to the Mongosh window and run:
-
+```
 > use mydb
 > load("dbscript.txt")
 > db.getCollectionNames()
-
-  The following collections share be in the list:
-  user, adminuser, activity, useractivity
+```  
+The following collections share be in the list: user, adminuser, activity, useractivity
 
 
 ## Reference Manual: MongoDB commands
 
-// create or switch current working db to "mydb"
+--create or switch current working db to "mydb"
 use mydb
 
 // show all collections in the current db
