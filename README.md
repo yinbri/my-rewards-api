@@ -46,7 +46,7 @@ go to the Mongosh window and run:
 The following collections share be in the list: user, adminuser, activity, useractivity
 
 
-## Reference Manual: MongoDB commands
+## SHort Reference of the MongoDB commands used in this project
 ```
 use mydb
 db.getCollectionNames()
@@ -59,35 +59,28 @@ db.user.insertOne([{"username":"luis@gmail.com", "password":"test"},
 
 # Develop web services with Python
 
-1. IDE used: PyCharm CE
-2. Create a working folder (c:\project\my-api)
-3. Install Flask from window cmd window
-   > cd c:\project\my-api
+1.IDE used: PyCharm CE
+2.The core was previously downloaded to c:\project\my-rewards-api
+3.Install Flask from cmd window
+```
+   > cd c:\project\my-web-api
    > pip install flask
-4  Create a app.py file in c:\project\my-api
-   Refer to the python source file that exposes REST APIs:
-       login_service (look up user from database)
-       enrollment_service (insert new user to database)
-       eligible_activity_service (find all activities that a student can see)
-       optin_service (record student opt in an activity)
-       rewards_activity_service (find a student's rewards activities)
-       update_enrollment_service (update the enrollment status of an activity for a student)
-       admin_login_service (look up admin user from database)
-       pending_user_activities_service (look up all pending activities for all students)
-       leader_board_service (retrieve top 3 leaders based on total points owned)
+```
+4.Browse the app.py file to familiar with the logic
 
-5. Start the web services to listen on localhost, port 3000
-
-> cd c:\project\my-api
+5.Start the web services and let it listen on localhost, port 3000
+```
+> cd c:\project\my-we-api
 > flask run -h localhost -p 3000
-
+```
 by default, Flask will load the app.py file
 
 # Test web service with SoapUI
 
-1. Download and install SoapUI if you don't have one installed. My version is 5.7.0
-2. Create a project
-3. Create a new request with the following data entered:
+1.Download and install SoapUI if you don't have one installed. My version is 5.7.0
+2.Create a project
+3.Create a new request with the following data entered:
+```
    Choose Request
    Method: POST
    Endpoint: http://localhost:3000/login_service
@@ -97,12 +90,15 @@ by default, Flask will load the app.py file
     "username": "brain@gmail.com",
     "password": "test"
    }
-4. Click the green arrow button to send the request
+```
+4.Click the green arrow button to send the request
    Expect the following on the right side response window when viewing as JSON
+```
    {
    "status": "success",
    "username": "brian@gmail.com"
    }
-5. Other services can be tested similarly
+```
+5.Other services can be tested similarly
                       
 
