@@ -1,16 +1,12 @@
 
-==================================================================
-Download code from Github
-==================================================================
+# Download code from Github
 
 Download code GitHub: https://github.com/yinbri/my-rewards-api
 
 Assumed the local working directory is c:\project\my-rewards-api
 
 
-==================================================================
-Install MongoDB (skip if you have installed before)
-==================================================================
+# Install MongoDB (skip if you have installed before)
 
 
 1.Download & install
@@ -24,9 +20,7 @@ Install MongoDB (skip if you have installed before)
   >c:\tools\MongoDB\Server\6..0\bin\bin>mongod --dbpath c:\project\my-rewards-api\data
   if this runs successfully, the mongod will not exit to windows command line prompt
 
-==================================================================
-Install Mongosh (skip if you have installed before)
-==================================================================
+# Install Mongosh (skip if you have installed before)
 
 1. Download (https://www.mongodb.com/try/download/shell)
 
@@ -42,9 +36,7 @@ c:\tools\mongosh-1.8-win32-x64\mongosh
   Run command to test installation of both the shell and the MongoDB
   >show dbs
 
-==================================================================
-Load testing data to MongoDB
-==================================================================
+# Load testing data to MongoDB
 
 go to the Mongosh window and run:
 
@@ -55,9 +47,8 @@ go to the Mongosh window and run:
   The following collections share be in the list:
   user, adminuser, activity, useractivity
 
-==================================================================
 
-Reference Manual: MongoDB commands
+## Reference Manual: MongoDB commands
 
 // create or switch current working db to "mydb"
 use mydb
@@ -79,9 +70,7 @@ db.user.insertOne([{"username":"luis@gmail.com", "password":"test"},
 {"username":"mary@gmail.com", "password":"test"}])
 
 
-==================================================================
-Develop web services with Python
-==================================================================
+# Develop web services with Python
 
 1. IDE used: PyCharm CE
 2. Create a working folder (c:\project\my-api)
@@ -107,9 +96,7 @@ Develop web services with Python
 
 by default, Flask will load the app.py file
 
-==================================================================
-Test web service with SoapUI
-==================================================================
+# Test web service with SoapUI
 
 1. Download and install SoapUI if you don't have one installed. My version is 5.7.0
 2. Create a project
@@ -131,7 +118,4 @@ Test web service with SoapUI
    }
 5. Other services can be tested similarly
                       
-
-
-
 
