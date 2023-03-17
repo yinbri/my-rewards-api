@@ -8,7 +8,6 @@ Assumed the local working directory is c:\project\my-rewards-api
 
 # Install MongoDB (skip if you have installed before)
 
-
 1. Download & install
 
 Download community edition (https://www.mongodb.com/try/download/community). Run the installer and install it to c:\tools. MongoDB will be installed to c:\tools\MongoDB
