@@ -2,16 +2,12 @@
 Download code from Github
 ===========================
 
-Download code GitHub: https://github.com/yinbri/my-rewards-api
-
-Assumed the local working directory is c:\project\my-rewards-api
+Download code GitHub: https://github.com/yinbri/my-rewards-api. Let the local working directory be c:\project\my-rewards-api.
 
 
 # Install MongoDB (skip if you have installed before)
 
-1. Download & install
-
-Download community edition (https://www.mongodb.com/try/download/community). Run the installer and install it to c:\tools. MongoDB will be installed to c:\tools\MongoDB
+1. Download community edition (https://www.mongodb.com/try/download/community) and choose to installation path, e.g. c:\tools, which will direct MongoDB to be installed at c:\tools\MongoDB
 
 2. Start MongoDB
 ```
