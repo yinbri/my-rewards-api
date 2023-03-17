@@ -47,19 +47,6 @@ go to the Mongosh window and run:
 The following collections share be in the list: user, adminuser, activity, useractivity
 
 
-Short Reference of the MongoDB commands used in this project
-=============================================
-
-```
-use mydb
-db.getCollectionNames()
-db.user.find()
-db.user.insertOne({"username":"luis@gmail.com", "password":"test"})
-db.user.deleteOne({"username":"luis@gmail.com", "password":"test"})
-db.user.insertOne([{"username":"luis@gmail.com", "password":"test"},
-{"username":"mary@gmail.com", "password":"test"}])
-```
-
 Develop web services with Python
 =============================================
 
@@ -126,4 +113,35 @@ REST API Exposed
 | update_enrollment_service 		| update the enrolment status of an activity for a student |
 | admin_login_service 			| look up admin user from database 			   |
 | pending_user_activities_service 	|look up all pending activities for all students 	   |
-| leader_board_service 			|retrieve top 3 leaders based on points earned	   |
+| leader_board_service 			|retrieve top 3 leaders based on points earned	   	   |
+
+Appendix
+=============================================
+
+##Short Reference of the MongoDB commands
+
+```
+use mydb
+db.getCollectionNames()
+db.user.find()
+db.user.insertOne({"username":"luis@gmail.com", "password":"test"})
+db.user.deleteOne({"username":"luis@gmail.com", "password":"test"})
+db.user.insertOne([{"username":"luis@gmail.com", "password":"test"},
+{"username":"mary@gmail.com", "password":"test"}])
+```
+##Short reference to git commands
+```
+git init
+git add -A
+git commit -m 'Added my project'
+git branch -M main
+git remote add origin https://github.com/yinbri/my-rewards-api.git
+git push -u -f origin main
+```
+##Push changed code to Github
+```
+git add READEME.md
+git commit -m "updated README.md"
+git push -u -f origin main
+
+```
