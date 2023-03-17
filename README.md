@@ -17,15 +17,15 @@ Download code from GitHub (https://github.com/yinbri/my-rewards-api.git) into a 
 
 # Install Mongosh (skip if you have it on your machine already)
 
-1.Download (https://www.mongodb.com/try/download/shell) and provide an installation folder to install, such as c:\tools and Mongosh will be installed to c:\tools\mongosh-1.8-win32-x64
+1. Download (https://www.mongodb.com/try/download/shell) and provide an installation folder to install, such as c:\tools and Mongosh will be installed to c:\tools\mongosh-1.8-win32-x64
 
-2.Start mongosh. Mongosh prompt will show up if it is started successfully.  
+2. Start mongosh. Mongosh prompt will show up if it is started successfully.  
 
 ```
 c:\tools\mongosh-1.8-win32-x64\mongosh
 ```
 
-Run command to test installation of both the shell and the MongoDB
+3. Run command to test installation of both the shell and the MongoDB
 ```
 > show dbs
 ```
