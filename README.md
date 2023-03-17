@@ -16,10 +16,10 @@ Assumed the local working directory is c:\project\my-rewards-api
   MongoDB will be installed to c:\tools\MongoDB
 
 2.Start MongoDB
-
+'''
   >c:\tools\MongoDB\Server\6..0\bin\bin>mongod --dbpath c:\project\my-rewards-api\data
   if this runs successfully, the mongod will not exit to windows command line prompt
-
+'''
 # Install Mongosh (skip if you have installed before)
 
 1. Download (https://www.mongodb.com/try/download/shell)
