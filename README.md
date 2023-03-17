@@ -47,26 +47,15 @@ The following collections share be in the list: user, adminuser, activity, usera
 
 
 ## Reference Manual: MongoDB commands
-
---create or switch current working db to "mydb"
+```
 use mydb
-
-// show all collections in the current db
 db.getCollectionNames()
-
-// list the documents in a collection
 db.user.find()
-
-// insert a document to a collection
 db.user.insertOne({"username":"luis@gmail.com", "password":"test"})
-
-// delete one document
 db.user.deleteOne({"username":"luis@gmail.com", "password":"test"})
-
-// insert multiple documents
 db.user.insertOne([{"username":"luis@gmail.com", "password":"test"},
 {"username":"mary@gmail.com", "password":"test"}])
-
+```
 
 # Develop web services with Python
 
