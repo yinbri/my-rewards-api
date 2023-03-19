@@ -1,0 +1,74 @@
+db = connect( 'mongodb://localhost/mydb' );
+
+db.useractivity.deleteMany({})
+db.user.deleteMany({})
+db.adminuser.deleteMany({})
+db.activity.deleteMany({})
+
+db.user.insertMany([
+{"username": "brian@gmail.com", "password":"test"},
+{"username": "kevin@gmail.com", "password":"test"},
+{"username": "yifang@gmail.com", "password":"test"},
+{"username": "calvin@gmail.com", "password":"test"}])
+
+db.adminuser.insert({"username":"admin", "password":"admin"})
+
+db.activity.insertMany([
+    {
+        "id": "1000",
+        "date": "2023-01-01",
+        "place" : "Stadium",
+        "description": "Fund raising event.",
+        "points": 100
+    },
+    {
+        "id": "1001",
+        "date": "2023-01-05",
+        "place" : "Math Building",
+        "description": "Math circle event.",
+        "points": 200
+    },
+    {
+        "id": "1002",
+        "date": "2023-02-01",
+        "place" : "Stadium",
+        "description": "Fund raising event.",
+        "points": 300
+    },
+    {
+        "id": "1003",
+        "date": "2023-02-20",
+        "place" : "Engineering Building",
+        "description": "Bridge building competition",
+        "points": 400
+    },
+    {
+        "id": "1004",
+        "date": "2023-02-01",
+        "place" : "class room 104",
+        "description": "Math Club",
+        "points": 500
+    },
+    {
+        "id": "1005",
+        "date": "2023-02-02",
+        "place" : "Class room 105",
+        "description": "DECA Club",
+        "points": 600
+    },
+    {
+        "id": "1006",
+        "date": "2023-02-03",
+        "place" : "Gym",
+        "description": "Floor hockey",
+        "points": 700
+
+    },
+    {
+        "id": "1007",
+        "date": "2023-02-04",
+        "place" : "205",
+        "description": "Debate Club",
+        "points": 800
+    }
+])
