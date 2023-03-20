@@ -65,9 +65,15 @@ or
 python -m pip install Flask
 ```
 
-4. Browse the app.py file to familiar with the logic
+4. Install pymongo
 
-5. Start the web services and let it listen on localhost, port 3000. By default, Flask will load the app.py file.
+```
+python3 -m pip install pymongo
+```
+
+5. Browse the app.py file to familiar with the logic
+
+6. Start the web services and let it listen on localhost, port 3000. By default, Flask will load the app.py file.
 
 
 ```
