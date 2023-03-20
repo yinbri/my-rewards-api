@@ -59,6 +59,12 @@ Develop web services with Python
    > pip install flask
 ```
 
+or
+
+```
+python -m pip install Flask
+```
+
 4. Browse the app.py file to familiar with the logic
 
 5. Start the web services and let it listen on localhost, port 3000. By default, Flask will load the app.py file.
