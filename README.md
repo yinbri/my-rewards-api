@@ -1,159 +1,185 @@
-Context
-=============================================
-This project illustrate how to keep data in MongoDB and how to develop REST APIs with Python Flask. This is my first time to develop APIs in my high school project. 
+# School Rewards API
 
-Download code from Github
-=============================================
+REST API for a student activity rewards program: students enroll in school events, staff verify attendance, and points roll up into a live leaderboard. Built with **Python + Flask + MongoDB**.
 
-Download code from GitHub (https://github.com/yinbri/my-rewards-api.git) into a local working directory, such as c:\project\my-rewards-api
+This is the backend. The Angular frontend lives in **[school-rewards-web](https://github.com/yinbri/school-rewards-web)**.
 
-Install MongoDB (skip if you have it already)
-=============================================
+<sub>Built in grade 11 (Feb–Mar 2023) as my first REST API — see [Notes on the code](#notes-on-the-code) for an honest read on what I'd do differently now.</sub>
 
-1. Download MongoDB community edition (https://www.mongodb.com/try/download/community) and choose to installation path, such as c:\tools\MongoDB
+---
 
-2. Start MongoDB 
+## What it does
 
-```
-  > c:\tools\MongoDB\Server\6..0\bin\bin>mongod --dbpath c:\project\my-rewards-api\data
-```
+A school runs events — fundraisers, math circle, DECA club — each worth points. The API models the full lifecycle:
 
-Install Mongosh (skip if you have it already)
-=============================================
+1. A student signs up and sees the events they're eligible for.
+2. Enrolling in an event banks **pending** points.
+3. An administrator marks attendance, converting pending points to **earned** points.
+4. A MongoDB aggregation ranks students by total points for the leaderboard.
 
-1. Download (https://www.mongodb.com/try/download/shell) and provide an installation folder to install, such as c:\tools and Mongosh will be installed to c:\tools\mongosh-1.8-win32-x64
+Two separate actors are supported: students (`user`) and staff (`adminuser`), each with their own login endpoint and their own set of routes.
 
-2. Start mongosh. Mongosh prompt will show up if it is started successfully.  
+---
 
-```
-c:\tools\mongosh-1.8-win32-x64\mongosh
-```
+## Architecture
 
-3. Run command to test installation of both the shell and the MongoDB
-```
-> show dbs
+```mermaid
+flowchart LR
+    A["Angular SPA<br/>localhost:8081"] -->|"/api/* proxy"| B["Flask API<br/>localhost:3000"]
+    B --> C[("MongoDB<br/>mydb")]
+    C --- D["user · adminuser<br/>activity · useractivity"]
 ```
 
-Load testing data to MongoDB
-=============================================
+The Angular dev server proxies every `/api/*` request to Flask, so the browser sees a single origin and there's no CORS configuration to manage.
 
-go to the Mongosh window and run:
+---
 
-```
-> use mydb
-> load("dbscript.txt")
-> db.getCollectionNames()
-```  
-The following collections share be in the list: user, adminuser, activity, useractivity
+## Data model
 
+| Collection | Purpose | Shape |
+|---|---|---|
+| `user` | Student accounts | `{ username, password }` |
+| `adminuser` | Staff accounts | `{ username, password }` |
+| `activity` | Event catalogue | `{ id, date, place, description, points }` |
+| `useractivity` | A student's relationship to an event | `{ username, id, date, place, description, points, status }` |
 
-Develop web services with Python
-=============================================
-
-1. IDE used: PyCharm CE
-2. The core was previously downloaded to c:\project\my-rewards-api
-3. Install Flask from cmd window
+`useractivity.status` is the state machine that drives the whole app:
 
 ```
-   > cd c:\project\my-web-api
-   > pip install flask
+Unenrolled ──enroll──> Enrolled ──admin verifies──> Attended
+     ^                     │
+     └──────unenroll───────┘
 ```
 
-or
+`Enrolled` counts toward **pending** points; `Attended` counts toward **earned** points.
 
-```
-python -m pip install Flask
-```
+---
 
-4. Install pymongo
+## API reference
 
-```
-python3 -m pip install pymongo
-```
+All endpoints return JSON with a `status` field of `"success"` or `"failed"`.
 
-5. Browse the app.py file to familiar with the logic
+| Method | Endpoint | Used by | Description |
+|---|---|---|---|
+| `POST` | `/login_service` | Student | Authenticate a student account |
+| `POST` | `/enrollment_service` | Student | Create a new student account |
+| `POST` | `/eligible_activity_service` | Student | List events a student can join, annotated with their current status |
+| `POST` | `/rewards_activity_service` | Student | A student's events plus `total_earned` and `total_pending` |
+| `POST` | `/update_enrollment_service` | Both | Move an event between `Enrolled` / `Attended` / `Unenrolled` |
+| `POST` | `/admin_login_service` | Admin | Authenticate a staff account |
+| `POST` | `/pending_user_activities_service` | Admin | Every student's activity records, for verification |
+| `GET` | `/leader_board_service` | Public | Students ranked by total points |
 
-6. Start the web services and let it listen on localhost, port 3000. By default, Flask will load the app.py file.
+### Example
 
-
-```
-> cd c:\project\my-we-api
-> flask run -h localhost -p 3000
-```
-
-Test web service with SoapUI
-=============================================
-
-1. Download and install SoapUI (https://www.soapui.org/downloads/soapui/) if you don't have one installed.
-2. Create a project
-3. Create a new request with the following data entered:
-
-```
-   Choose Request
-   Method: POST
-   Endpoint: http://localhost:3000/login_service
-   MediaType: application/json
-   Add the following as the content of request:
-   {
-    "username": "brain@gmail.com",
-    "password": "test"
-   }
+```bash
+curl -X POST http://localhost:3000/rewards_activity_service \
+  -H 'Content-Type: application/json' \
+  -d '{"username": "brian@gmail.com"}'
 ```
 
-4. Click the green arrow button to send the request
-   Expect the following on the right side response window when viewing as JSON
+```json
+{
+  "status": "success",
+  "total_earned": 300,
+  "total_pending": 200,
+  "useractivities": [
+    {
+      "username": "brian@gmail.com",
+      "id": "1001",
+      "date": "2023-01-05",
+      "place": "Math Building",
+      "description": "Math circle event.",
+      "points": 200,
+      "status": "Enrolled"
+    }
+  ]
+}
+```
+
+### Status transitions
+
+```bash
+curl -X POST http://localhost:3000/update_enrollment_service \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "username": "brian@gmail.com",
+    "rowvalue": {
+      "id": "1001", "date": "2023-01-05", "place": "Math Building",
+      "description": "Math circle event.", "points": 200, "status": "Attended"
+    }
+  }'
+```
+
+---
+
+## Running it locally
+
+**Prerequisites:** Python 3.9+, and MongoDB running on `localhost:27017` ([community edition](https://www.mongodb.com/try/download/community)).
+
+```bash
+git clone https://github.com/yinbri/school-rewards-api.git
+cd school-rewards-api
+
+python3 -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Seed the database with sample students, staff, and events:
+
+```bash
+mongosh db/dbscript.js
+```
+
+Start the API on port 3000 — the port the Angular proxy expects:
+
+```bash
+flask run -h localhost -p 3000
+```
+
+Verify:
+
+```bash
+curl http://localhost:3000/leader_board_service
+```
+
+### Seeded accounts
+
+| Role | Username | Password |
+|---|---|---|
+| Student | `brian@gmail.com` | `test` |
+| Student | `kevin@gmail.com` | `test` |
+| Admin | `admin` | `admin` |
+
+Also seeded: 4 student accounts and 8 events worth 100–800 points each.
+
+---
+
+## Project structure
 
 ```
-   {
-   "status": "success",
-   "username": "brian@gmail.com"
-   }
+.
+├── app.py                # All routes and MongoDB access
+├── db/dbscript.js        # mongosh seed script
+└── requirements.txt
 ```
 
-5. Other services can be tested similarly
-                      
-REST API Exposed
-=============================================
+---
 
-| API 					| Description						   |
-|---------------------------------------|----------------------------------------------------------|
-| login_service	 			| look up user from database				   |
-| enrollment_service 			| insert new user to database			  	   |
-| eligible_activity_service 		| find all activities that a student can see  	 	   |
-| optin_service 			| record student opt into an activity		 	   |
-| rewards_activity_service 		| find a student's rewards activities 			   |
-| update_enrollment_service 		| update the enrolment status of an activity for a student |
-| admin_login_service 			| look up admin user from database 			   |
-| pending_user_activities_service 	|look up all pending activities for all students 	   |
-| leader_board_service 			|retrieve top 3 leaders based on points earned	   	   |
+## Notes on the code
 
-Appendix
-=============================================
+This was my first REST API, written for a high school project, and I've deliberately left it as it was rather than quietly modernising it. Things I'd do differently today:
 
-## Short Reference of the MongoDB commands
+- **Passwords are stored and compared in plaintext.** Real accounts would need hashing (bcrypt/argon2) and session tokens instead of an authenticated flag held client-side.
+- **Every request opens its own `MongoClient`.** PyMongo's client is designed to be created once and shared — the connection pool is wasted here.
+- **All routes live in one `app.py`.** Flask blueprints and a data-access layer would separate transport from persistence.
+- **No input validation or automated tests.** Malformed payloads raise unhandled exceptions rather than returning a 4xx.
+- **Status codes are always 200**, with success signalled in the body. Real HTTP semantics (401, 404, 409) would be better.
 
-```
-use mydb
-db.getCollectionNames()
-db.user.find()
-db.user.insertOne({"username":"luis@gmail.com", "password":"test"})
-db.user.deleteOne({"username":"luis@gmail.com", "password":"test"})
-db.user.insertOne([{"username":"luis@gmail.com", "password":"test"},
-{"username":"mary@gmail.com", "password":"test"}])
-```
-## Short reference to git commands
-```
-git init
-git add -A
-git commit -m 'Added my project'
-git branch -M main
-git remote add origin https://github.com/yinbri/my-rewards-api.git
-git push -u -f origin main
-```
-## Push changed code to Github
-```
-git add READEME.md
-git commit -m "updated README.md"
-git push -u -f origin main
+What it does demonstrate: designing an API around a clear domain model, a two-actor permission split, MongoDB aggregation pipelines, and shipping a working frontend against my own backend contract.
 
-```
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE).

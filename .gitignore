@@ -1,3 +1,9 @@
-# git ignore
 __pycache__/
-
+*.py[cod]
+.venv/
+venv/
+.env
+data/
+.DS_Store
+.idea/
+.vscode/
